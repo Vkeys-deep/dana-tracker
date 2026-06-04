@@ -1,0 +1,13 @@
+* text=auto
+
+# Gradle wrapper - keep as executable
+artifacts/rdpt-app/android/gradlew eol=lf diff=sh
+gradle/wrapper/* eol=lf
+
+# Binary files
+*.jar binary
+*.png binary
+*.jpg binary
+*.gif binary
+*.zip binary
+*.apk binary
