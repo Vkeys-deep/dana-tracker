@@ -12,18 +12,18 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4.2.2 # Update ke patch terbaru
+        uses: actions/checkout@v4.2.2
 
-      # 1. Pasang PNPM dengan versi Actions terbaru yang support Node 24
+      # 1. Pasang PNPM dengan versi Actions terbaru
       - name: Set up PNPM
         uses: pnpm/action-setup@v4
         with:
-          version: 9 # Kita pakai pnpm v9 yang lebih stabil di Node 24
+          version: 9
 
       - name: Set up Node.js 24
         uses: actions/setup-node@v4
         with:
-          node-version: "24" # Langsung tembak ke Node 24 biar ga kena warning
+          node-version: "24"
 
       # 2. Install dependencies langsung di dalam folder artifacts/rdpt-app
       - name: Install dependencies
@@ -65,7 +65,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-       Tarbiah rakit APK
       - name: Build Debug APK
         working-directory: artifacts/rdpt-app/android
         run: ./gradlew assembleDebug --no-daemon
