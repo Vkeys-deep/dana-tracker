@@ -46,9 +46,11 @@ jobs:
       - name: Install Capacitor CLI & Android platform
         working-directory: artifacts/rdpt-app
         run: |
-          npx cap init "RDPT Insight" "com.rdpt.insight" --web-dir=dist 2>/dev/null || true
-          npx cap add android 2>/dev/null || true
-          npx cap sync android
+          pnpm add -D @capacitor/cli
+          pnpm add @capacitor/core @capacitor/android
+          pnpm exec cap init "RDPT Insight" "com.rdpt.insight" --web-dir=dist || true
+          pnpm exec cap add android || true
+          pnpm exec cap sync android
 
       # 6. Jalankan Gradle buat ngerakit APK
       - name: Make Gradle wrapper executable
