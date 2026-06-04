@@ -14,7 +14,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 1. Install PNPM karena project kamu pakai pnpm
+      # 1. Pasang PNPM (Biar ga eror nyari package-lock.json)
       - name: Set up PNPM
         uses: pnpm/action-setup@v3
         with:
@@ -42,7 +42,7 @@ jobs:
           distribution: temurin
           java-version: "17"
 
-      # 5. Inisialisasi & sinkronisasi Capacitor CLI di dalam folder artifacts/rdpt-app
+      # 5. Sinkronisasi Capacitor CLI di dalam folder artifacts/rdpt-app
       - name: Install Capacitor CLI & Android platform
         working-directory: artifacts/rdpt-app
         run: |
@@ -50,6 +50,7 @@ jobs:
           npx cap add android 2>/dev/null || true
           npx cap sync android
 
+      # 6. Jalankan Gradle buat ngerakit APK
       - name: Make Gradle wrapper executable
         working-directory: artifacts/rdpt-app
         run: chmod +x android/gradlew
@@ -64,12 +65,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      # 6. Proses rakit APK Android-nya
       - name: Build Debug APK
         working-directory: artifacts/rdpt-app/android
         run: ./gradlew assembleDebug --no-daemon
 
-      # 7. Upload hasilnya biar bisa kamu download di HP
+      # 7. Upload hasil APK
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
