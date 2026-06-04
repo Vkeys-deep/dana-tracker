@@ -3,7 +3,6 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
 
-// Setel port default biar ga eror pas build di lingkungan mana pun
 const port = Number(process.env.PORT) || 5173;
 const basePath = process.env.BASE_PATH || "/";
 
@@ -12,20 +11,24 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
-    // Semua plugin internal Replit dibuang total biar lancar di GitHub
   ],
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "src"),
-      "@assets": path.resolve(import.meta.dirname, "..", "..", "attached_assets"),
+      // Diubah biar kalau folder luar ga ada, dia ga langsung bikin crash build
+      "@assets": path.resolve(import.meta.dirname, "src/assets"),
     },
     dedupe: ["react", "react-dom"],
   },
   root: path.resolve(import.meta.dirname),
   build: {
-    // Diubah ke 'dist' standar biar klop sama skrip pembuat APK (android.yml)
     outDir: path.resolve(import.meta.dirname, "dist"),
     emptyOutDir: true,
+    // Mengantisipasi eror minifikasi akibat pemutusan dependensi internal workspace
+    minify: "esbuild",
+    reportCompressedSize: false,
+    // Supaya chunk-chunk kecil ga bikin ribet Capacitor pas sinkronisasi ke Android
+    chunkSizeWarningLimit: 2000,
   },
   server: {
     port,
@@ -33,7 +36,7 @@ export default defineConfig({
     host: "0.0.0.0",
     allowedHosts: true,
     fs: {
-      strict: true,
+      strict: false, // Disetel false biar Vite ga rewel nyari file di luar folder root app
     },
   },
   preview: {
