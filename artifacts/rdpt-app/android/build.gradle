@@ -1,16 +1,18 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
     dependencies {
         classpath 'com.android.tools.build:gradle:8.0.0'
         classpath 'com.google.gms:google-services:4.4.1'
-        // Add any other plugins here if needed
     }
 }
 
 apply plugin: 'com.android.application'
 
-// Menyelaraskan versi compile & target agar seragam di Java 17
 subprojects {
     afterEvaluate { project ->
         if (project.hasProperty('android')) {
