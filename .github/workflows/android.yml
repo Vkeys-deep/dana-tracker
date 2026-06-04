@@ -52,30 +52,19 @@ jobs:
           pnpm exec cap add android || true
           pnpm exec cap sync android
 
-      # 6. Cache Gradle biar proses build kedepannya makin ngebut
-      - name: Cache Gradle packages
-        uses: actions/cache@v4
+      # 6. Pasang & Konfigurasi Gradle 8.0 Resmi (Otomatis buatin wrapper, .jar, & cache aman)
+      - name: Setup Gradle 8.0
+        uses: gradle/actions/setup-gradle@v4
         with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('artifacts/rdpt-app/android/**/*.gradle*', 'artifacts/rdpt-app/android/**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
+          gradle-version: "8.0"
+          cache-disabled: false
 
-      # 7. Generate ulang Gradle Wrapper resmi dari server biar file .jar & script-nya lengkap penuh!
-      - name: Generate and Make Gradle wrapper executable
-        working-directory: artifacts/rdpt-app/android
-        run: |
-          gradle wrapper --gradle-version 8.0 --distribution-type bin
-          chmod +x gradlew
-
-      # 8. Jalankan Gradle buat ngerakit APK
+      # 7. Jalankan Gradle buat ngerakit APK (Pakai gradle langsung, bukan ./gradlew agar aman dari file hilang)
       - name: Build Debug APK
         working-directory: artifacts/rdpt-app/android
-        run: ./gradlew assembleDebug --no-daemon
+        run: gradle assembleDebug --no-daemon
 
-      # 9. Upload hasil APK
+      # 8. Upload hasil APK
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
