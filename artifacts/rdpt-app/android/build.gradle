@@ -1,40 +1,29 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
 buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
     dependencies {
         classpath 'com.android.tools.build:gradle:8.0.0'
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.10'
+        classpath 'com.google.gms:google-services:4.4.1'
+        // Add any other plugins here if needed
     }
 }
 
-plugins {
-    id 'com.android.application' version '8.0.0' apply false
-}
+apply plugin: 'com.android.application'
 
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-
+// Menyelaraskan versi compile & target agar seragam di Java 17
 subprojects {
     afterEvaluate { project ->
         if (project.hasProperty('android')) {
-            android {
-                compileSdkVersion 34
-                
-                compileOptions {
-                    sourceCompatibility JavaVersion.VERSION_17
-                    targetCompatibility JavaVersion.VERSION_17
-                }
-                
-                kotlinOptions {
-                    jvmTarget = "17"
+            project.android {
+                compileSdk 34
+                defaultConfig {
+                    targetSdk 34
                 }
             }
         }
     }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }
