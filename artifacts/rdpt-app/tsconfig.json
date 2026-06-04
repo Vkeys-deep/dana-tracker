@@ -17,8 +17,8 @@
     }
   },
   "references": [
-    {
-      "path": "../../lib/api-client-react"
-    }
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" },
+    { "path": "../../lib/api-client-react" }
   ]
 }
