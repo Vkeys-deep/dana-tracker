@@ -28,7 +28,7 @@ jobs:
       # 2. Install dependencies langsung di dalam folder artifacts/rdpt-app
       - name: Install dependencies
         working-directory: artifacts/rdpt-app
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
 
       # 3. Build React Vite di dalam folder artifacts/rdpt-app
       - name: Build React (Vite)
