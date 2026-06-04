@@ -9,6 +9,10 @@ buildscript {
     }
 }
 
+plugins {
+    id 'com.android.application' version '8.0.0' apply false
+}
+
 allprojects {
     repositories {
         google()
@@ -20,10 +24,13 @@ subprojects {
     afterEvaluate { project ->
         if (project.hasProperty('android')) {
             android {
+                compileSdkVersion 34
+                
                 compileOptions {
                     sourceCompatibility JavaVersion.VERSION_17
                     targetCompatibility JavaVersion.VERSION_17
                 }
+                
                 kotlinOptions {
                     jvmTarget = "17"
                 }
