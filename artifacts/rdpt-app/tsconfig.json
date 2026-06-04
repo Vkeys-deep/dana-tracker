@@ -20,11 +20,11 @@
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
 
-    /* Path Mapping agar alias @ dan @assets tetap jalan */
+    /* Path Mapping mandiri agar alias @ tetap jalan */
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@assets/*": ["../../attached_assets/*"]
+      "@assets/*": ["src/assets/*"]
     }
   },
   "include": ["src/**/*"],
