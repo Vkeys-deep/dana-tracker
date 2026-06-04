@@ -52,14 +52,14 @@ jobs:
           pnpm exec cap add android || true
           pnpm exec cap sync android
 
-      # 6. Pasang & Konfigurasi Gradle 8.0 Resmi (Otomatis buatin wrapper, .jar, & cache aman)
+      # 6. Pasang & Konfigurasi Gradle 8.0 Resmi (Otomatis ngurusin wrapper & cache aman)
       - name: Setup Gradle 8.0
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: "8.0"
           cache-disabled: false
 
-      # 7. Jalankan Gradle buat ngerakit APK (Pakai gradle langsung, bukan ./gradlew agar aman dari file hilang)
+      # 7. Jalankan Gradle buat ngerakit APK (Langsung pakai perintah gradle global hasil setup)
       - name: Build Debug APK
         working-directory: artifacts/rdpt-app/android
         run: gradle assembleDebug --no-daemon
